@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <button class="stop" type="button" name="button">结束</button>
+    <button class="play" type="button" name="button">播放录制</button>
+    <video class="video"></video>
+    <script type="text/javascript">
+      const tracks = []; // 媒体数据
+
+      let mediaRecorder = null;
+
+      const config = {
+        audio: false,
+        video: true
+      }
+      const options = {
+        mimeType: 'video/webm; codecs = vp8'
+      }
+      navigator.mediaDevices.getDisplayMedia(config)
+        .then(stream => {
+          mediaRecorder = new MediaRecorder(stream, options);
+          // 当生成媒体流数据时触发该事件，回调传参 event 指本次生成处理的媒体数据
+          mediaRecorder.ondataavailable = e => {
+            if (e?.data?.size > 0) {
+              tracks.push(e.data)
+            }
+          }
+
+          mediaRecorder.start();
+        })
+
+        const stopBtn = document.querySelector('.stop');
+        stopBtn.onclick = () => {
+          mediaRecorder.stop()
+        }
+        const playBtn = document.querySelector('.play');
+        playBtn.onclick = () => {
+          const video = document.querySelector(".video");
+          const blob = new Blob(tracks, {type : "video/webm"});
+          video.src = window.URL.createObjectURL(blob);
+          video.srcObject = null;
+          video.controls = true;
+          video.play();
+        }
+
+
+    </script>
+  </body>
+</html>

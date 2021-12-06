@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <select class="" name="">
+      <option value=""></option>
+    </select>
+    <video id="video" autoplay></video>
+
+    <script type="text/javascript">
+      const config = {
+        // video: true,
+        video: {
+          width: 640,
+          height: 480,
+          // aspectRatio   // 比例 4:3  16:9
+          frameRate: 50,   // 帧率
+          // facingMode:    //
+
+        },
+        audio: false,
+        // audio: {
+        //   volume 0-1  音量
+        //   sampleSize 采样大小 （16字节）
+        //   echoCancellation  boolean  回音消除
+        //   autoGainControl boolean  自动增益 （在原视频添加音量）
+        //   noiseSuppression  降噪
+        //   latency  延迟
+        //   channelCount 通道
+        //   deviceID
+        //   groupID
+        // }
+      };
+
+      // 设置特效
+      // 灰度
+      // 褐色
+      // 饱和度
+      // 色相旋转
+      // 反色
+      // 透明度
+      // 亮度
+      // 对比度
+      // 模糊
+      // 阴影
+
+      console.log(navigator.mediaDevices);
+
+      // adapter.js  适配各个浏览器的兼容
+
+      navigator.mediaDevices.getUserMedia(config)
+        .then(stream => {
+          const videoDom = document.querySelector('#video');
+          videoDom.srcObject = stream;
+          // videoDom.src = window.URL.createObjectURL(stream);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+
+    </script>
+  </body>
+</html>
